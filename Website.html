@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Orange Invest — Talk to Your Money</title>
+<template id="__bundler_thumbnail" data-bg-color="#0c2744">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#0c2744"/>
+    <!-- tear seam across the middle -->
+    <path d="M0,380 L80,395 L160,370 L240,400 L320,378 L400,405 L480,372 L560,398 L640,376 L720,402 L800,378 L880,400 L960,374 L1040,396 L1120,376 L1200,398 L1200,800 L0,800 Z" fill="#f2ead8"/>
+    <!-- orange dot / brand mark -->
+    <circle cx="600" cy="240" r="70" fill="#ff6a13"/>
+    <text x="600" y="268" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="64" fill="#fbf7f0">O</text>
+    <!-- word mark below seam -->
+    <text x="600" y="600" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="88" fill="#121212">la dolce vita</text>
+  </svg>
+</template>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#121212;
+    --cream:#fbf7f0;
+    --paper:#f2ead8;
+    --orange:#ff6a13;
+    --orange-deep:#e85a0c;
+    --sky:#3b6faf;
+    --navy:#0c2744;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#0a0705;color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:clip;overscroll-behavior-y:none}
+  body{overflow-x:clip;max-width:100%;overscroll-behavior-y:none}
+
+  .runway{height:4000px;position:relative}
+  .stage{position:sticky;top:0;height:100vh;height:100svh;width:100%;overflow:hidden;background:#0a0705}
+  .scene-zoom{position:absolute;inset:0;transform-origin:50% 55%;will-change:transform}
+
+  /* ============ SCENE 1 (phones) ============ */
+  .scene-1{position:absolute;inset:0;overflow:hidden}
+  .scene-1 .photo{
+    position:absolute;inset:0;
+    background:#3b6faf url('images/scene-1-bg.png') center/cover no-repeat;
+  }
+  .scene-1 .vignette{
+    position:absolute;inset:0;
+    background:
+      radial-gradient(ellipse at 50% 45%, transparent 20%, rgba(6,18,36,.55) 90%),
+      linear-gradient(180deg, rgba(12,39,68,.35) 0%, transparent 30%, transparent 70%, rgba(12,39,68,.55) 100%);
+    pointer-events:none;
+  }
+  .scene-1 .grain{
+    position:absolute;inset:-10%;pointer-events:none;opacity:.35;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='3'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .7 0'/></filter><rect width='220' height='220' filter='url(%23n)'/></svg>");
+  }
+
+  /* Top chrome: logo only */
+  .top-chrome{
+    position:absolute;left:0;right:0;top:0;z-index:6;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:clamp(16px, 3vw, 28px) clamp(18px, 4vw, 44px);color:#fff;
+  }
+  .top-chrome .brand{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:'Inter',sans-serif;font-weight:700;letter-spacing:-.01em;font-size:clamp(14px, 1.6vw, 18px);
+  }
+  .top-chrome .brand .square{
+    width:clamp(18px, 2vw, 22px);aspect-ratio:1;background:var(--orange);border-radius:4px;
+    display:inline-block;position:relative;
+  }
+  .top-chrome .brand .square::after{
+    content:"";position:absolute;inset:22%;border:2px solid #fff;border-radius:1px;
+  }
+  .top-chrome nav{display:flex;gap:28px;font-size:13px;opacity:.9}
+  .top-chrome nav a{color:#fff;text-decoration:none}
+  .top-chrome .pill{
+    background:#fff;color:#111;padding:9px 16px;border-radius:999px;font-size:13px;font-weight:600;
+  }
+
+  /* Centered copy block */
+  .s1-copy{
+    position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);z-index:5;
+    text-align:center;color:#fff;padding:0 6vw;
+  }
+  .s1-copy h1{
+    font-family:'Instrument Serif',serif;font-weight:400;
+    font-size:clamp(42px, 11vw, 200px);line-height:1.12;letter-spacing:-.025em;
+    text-shadow:0 4px 40px rgba(0,0,0,.45);
+    text-wrap:balance;padding-bottom:.08em;
+  }
+  .s1-copy h1 .mark{
+    display:inline-block;background:var(--orange);color:#fff;
+    padding:0 .18em .06em;transform:rotate(-1.5deg);
+    box-shadow:0 6px 0 rgba(0,0,0,.08);
+  }
+  .s1-copy h1 em{font-style:italic}
+  .s1-copy .sub{
+    margin-top:clamp(32px, 6vw, 72px);font-family:'Instrument Serif',serif;font-style:italic;
+    font-size:clamp(14px, 2vw, 28px);opacity:.95;letter-spacing:.005em;
+    text-shadow:0 2px 18px rgba(0,0,0,.35);
+    max-width:min(720px, 92vw);margin-left:auto;margin-right:auto;text-wrap:balance;line-height:1.45;
+  }
+  .s1-copy .sub .xo{font-style:italic}
+
+  .scroll-hint{
+    position:absolute;left:50%;bottom:34px;transform:translateX(-50%);z-index:7;
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.32em;
+    color:#fff;opacity:.85;text-transform:uppercase;
+    display:flex;flex-direction:column;align-items:center;gap:10px;transition:opacity .4s;
+  }
+  .scroll-hint .line{width:1px;height:40px;background:linear-gradient(180deg,transparent,#fff);animation:drip 1.8s ease-in-out infinite}
+  @keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}50.01%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+  /* ============ TEAR ============ */
+  .tear{position:absolute;inset:0;pointer-events:none;z-index:4}
+  .tear .half{position:absolute;left:0;right:0;height:50%;overflow:hidden;will-change:transform;-webkit-backface-visibility:hidden;backface-visibility:hidden;-webkit-perspective:1000px;perspective:1000px}
+  .tear .top{top:0}
+  .tear .bot{bottom:0}
+  .tear .half .inner{position:absolute;left:0;right:0;height:200%}
+  .tear .top .inner{top:0}
+  .tear .bot .inner{bottom:0}
+
+  /* glowing torn seam */
+  .tear .edge{
+    position:absolute;left:-4%;right:-4%;height:42px;pointer-events:none;opacity:0;
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(255,180,80,.85) 0%, transparent 60%),
+      linear-gradient(180deg, #ffd7a1 0%, var(--orange) 35%, transparent 90%);
+    filter:blur(8px);mix-blend-mode:screen;
+  }
+  .tear .top .edge{bottom:-20px}
+  .tear .bot .edge{top:-20px;transform:scaleY(-1)}
+
+  /* jagged paper edge */
+  .tear .jag{
+    position:absolute;left:-2%;right:-2%;height:22px;pointer-events:none;
+    background:var(--paper);
+    -webkit-mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='22' preserveAspectRatio='none'><path d='M0,0 L0,14 L12,8 L28,16 L44,6 L62,14 L78,4 L96,15 L114,7 L132,17 L150,6 L168,14 L186,4 L206,15 L224,7 L244,16 L264,6 L286,14 L308,4 L330,17 L352,6 L374,15 L396,5 L418,16 L440,6 L462,15 L484,4 L506,17 L528,7 L550,14 L572,4 L594,16 L616,6 L638,15 L660,5 L682,17 L704,7 L726,14 L748,4 L770,16 L790,7 L800,12 L800,0 Z' fill='black'/></svg>");
+    mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='22' preserveAspectRatio='none'><path d='M0,0 L0,14 L12,8 L28,16 L44,6 L62,14 L78,4 L96,15 L114,7 L132,17 L150,6 L168,14 L186,4 L206,15 L224,7 L244,16 L264,6 L286,14 L308,4 L330,17 L352,6 L374,15 L396,5 L418,16 L440,6 L462,15 L484,4 L506,17 L528,7 L550,14 L572,4 L594,16 L616,6 L638,15 L660,5 L682,17 L704,7 L726,14 L748,4 L770,16 L790,7 L800,12 L800,0 Z' fill='black'/></svg>");
+    -webkit-mask-size:100% 100%;mask-size:100% 100%;
+    -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+    filter:drop-shadow(0 2px 0 rgba(0,0,0,.08));
+    opacity:0;
+  }
+  .tear .top .jag{bottom:-14px}
+  .tear .bot .jag{top:-14px;transform:scaleY(-1)}
+
+  /* ============ SCENE 2 (TV) ============ */
+  .scene-2{position:absolute;inset:0;overflow:hidden;z-index:1;will-change:transform}
+  .scene-2 .photo{
+    position:absolute;inset:0;
+    background:#ffffff url('images/scene-2-bg.png') center/cover no-repeat;
+  }
+  .scene-2 .wash{
+    position:absolute;inset:0;pointer-events:none;
+    background:
+      radial-gradient(ellipse at 50% 55%, transparent 30%, rgba(0,0,0,.18) 95%);
+  }
+  .scene-2 .grain{
+    position:absolute;inset:-10%;pointer-events:none;opacity:.35;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='5'/><feColorMatrix values='0 0 0 0 .3  0 0 0 0 .2  0 0 0 0 .1  0 0 0 .5 0'/></filter><rect width='220' height='220' filter='url(%23n)'/></svg>");
+  }
+
+  /* Site is a fixed layer that slides up from below to cover scene 2 */
+  .site{position:fixed;left:0;right:0;top:100vh;top:100svh;bottom:auto;z-index:10;background:linear-gradient(to bottom, rgba(242,234,216,0) 0%, rgba(251,247,240,0.6) 7%, rgba(251,247,240,0.92) 16%, #fbf7f0 25%, #fbf7f0 60%, #f8f3e7 73%, #f5eddd 87%, #f2ead8 100%);color:var(--ink);min-height:100vh;min-height:100svh;height:100vh;height:100svh;display:flex;flex-direction:column;will-change:transform;overflow:hidden;-webkit-backface-visibility:hidden;backface-visibility:hidden;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}
+  .site-inner{
+    max-width:1120px;margin:0 auto;width:100%;
+    padding:clamp(28px, 6vw, 72px) clamp(20px, 4vw, 44px) clamp(60px, 10vw, 120px);
+    display:flex;flex-direction:column;align-items:center;gap:clamp(28px, 5vw, 56px);
+    flex:1;
+  }
+  .banner{
+    width:100%;max-width:1040px;
+    border-radius:clamp(14px, 2vw, 24px);overflow:hidden;
+    background:#1f5ab0;
+    box-shadow:0 30px 60px -30px rgba(0,0,0,.35);
+    aspect-ratio: 16/7;
+  }
+  .banner img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 20%}
+
+  .s3-copy{text-align:center;max-width:680px;width:100%}
+  .s3-copy h2{
+    font-family:'Instrument Serif',serif;font-weight:400;
+    font-size:clamp(32px, 6vw, 72px);line-height:1.05;letter-spacing:-.02em;color:#111;
+    text-wrap:balance;
+  }
+  .s3-copy h2 em{font-style:italic;color:var(--orange)}
+  .s3-copy p{
+    margin-top:clamp(14px, 2vw, 20px);
+    font-size:clamp(15px, 1.8vw, 18px);line-height:1.55;color:#333;opacity:.85;
+    max-width:540px;margin-left:auto;margin-right:auto;text-wrap:balance;
+  }
+
+  .s3-actions{
+    display:flex;gap:14px;flex-wrap:wrap;justify-content:center;width:100%;
+  }
+  .s3-btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:10px;
+    padding:16px 28px;border-radius:999px;
+    font-family:'Inter',sans-serif;font-size:15px;font-weight:600;letter-spacing:-.005em;
+    border:1px solid transparent;cursor:pointer;text-decoration:none;
+    min-height:52px;transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .s3-btn.primary{background:#111;color:#fff}
+  .s3-btn.primary:hover{transform:translateY(-2px);box-shadow:0 14px 30px -14px rgba(0,0,0,.45)}
+  .s3-btn.ghost{background:transparent;color:#111;border-color:rgba(0,0,0,.22)}
+  .s3-btn.ghost:hover{background:rgba(0,0,0,.04);transform:translateY(-2px)}
+  .s3-btn .arr{font-family:'Instrument Serif',serif;font-size:18px;font-style:italic;opacity:.9}
+
+  /* ============ FOOTER ============ */
+  .s3-footer{
+    width:100%;max-width:1040px;
+    display:flex;align-items:center;justify-content:center;
+    gap:28px;
+    padding-top:clamp(20px,3vw,36px);
+    border-top:1px solid rgba(0,0,0,.10);
+    margin-top:auto;
+  }
+  .s3-footer-links{display:flex;align-items:center;gap:28px}
+  .s3-footer-link{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:40px;height:40px;border-radius:50%;
+    color:#666;border:1px solid rgba(0,0,0,.12);
+    text-decoration:none;transition:color .2s ease, border-color .2s ease, background .2s ease;
+  }
+  .s3-footer-link:hover{color:var(--orange);border-color:var(--orange);background:rgba(255,106,19,.06)}
+  .s3-footer-link svg{flex-shrink:0}
+  @media(max-width:640px){
+    .s3-footer{gap:20px}
+    .s3-footer-links{gap:20px}
+  }
+
+  /* MOBILE: intentional redesign (not scaled down) */
+  @media (max-width: 640px){
+    .scene-2 .photo{background-size:cover;background-position:center 60%}
+    .scene-1 .photo{background-size:cover;background-position:center center}
+    .site-inner{
+      padding:32px 20px 56px;
+      gap:28px;
+      align-items:stretch;
+    }
+    .banner{
+      border-radius:16px;
+      aspect-ratio:auto;
+      height:auto;
+      max-width:100%;
+    }
+    .banner img{width:100%;height:auto;object-fit:contain;object-position:center}
+    .s3-copy{text-align:left;padding:0 2px}
+    .s3-copy h2{font-size:32px;line-height:1.08}
+    .s3-copy p{margin-left:0;margin-right:0;font-size:16px;max-width:none}
+    .s3-actions{flex-direction:column;gap:10px;width:100%}
+    .s3-btn{width:100%;padding:16px 22px;font-size:15px;min-height:54px}
+    .s3-btn.primary{order:1}
+    .s3-btn.ghost{order:2}
+  }
+  @media (max-width: 380px){
+    .s3-copy h2{font-size:28px}
+    .s3-copy p{font-size:15px}
+  }
+
+  .progress{position:fixed;top:0;left:0;right:0;height:2px;background:rgba(255,255,255,.12);z-index:50}
+  .progress .bar{height:100%;background:linear-gradient(90deg,#ffd7a1,var(--orange));width:0}
+
+  /* Tweaks */
+  .tweaks{position:fixed;right:clamp(10px, 2vw, 20px);bottom:clamp(10px, 2vw, 20px);z-index:100;background:rgba(15,10,8,.88);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px 16px;color:#fbf7f0;font-family:'JetBrains Mono',monospace;font-size:11px;width:min(280px, calc(100vw - 24px));display:none}
+  .tweaks.open{display:block}
+  .tweaks h4{font-family:'Inter',sans-serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px;opacity:.7;font-weight:500}
+  .tweaks .row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:10px 0}
+  .tweaks .row label{opacity:.75;letter-spacing:.05em}
+  .tweaks .row input[type=range]{width:clamp(90px, 18vw, 130px);accent-color:var(--orange)}
+  .tweaks .row .v{width:50px;text-align:right;color:#ffb780}
+  .tweaks button.replay{width:100%;margin-top:10px;background:var(--orange);color:#fff;border:none;padding:9px;border-radius:8px;font-family:inherit;font-size:11px;letter-spacing:.15em;text-transform:uppercase;cursor:pointer}
+</style>
+</head>
+<body>
+
+<div class="progress"><div class="bar" id="bar"></div></div>
+
+<div class="runway" id="runway">
+  <div class="stage" id="stage">
+
+    <!-- Scene 2 (revealed beneath) -->
+    <div class="scene-2" id="scene2">
+      <div class="scene-zoom" id="s2zoom">
+        <div class="photo"></div>
+        <div class="wash"></div>
+        <div class="grain"></div>
+      </div>
+    </div>
+
+    <!-- Tear halves contain Scene 1 -->
+    <div class="tear" id="tear">
+      <div class="half top" id="topHalf">
+        <div class="inner">
+          <div class="scene-1">
+            <div class="photo"></div>
+            <div class="vignette"></div>
+            <div class="grain"></div>
+
+            <div class="top-chrome">
+              <div class="brand"><span class="square"></span> Orange Invest</div>
+            </div>
+
+            <div class="s1-copy">
+              <h1><span class="mark">Talk</span> to Your <em>Money</em></h1>
+              <div class="sub">Took you long enough — your future self, <span class="xo">xoxo</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="jag" id="jagTop"></div>
+        <div class="edge" id="edgeTop"></div>
+      </div>
+
+      <div class="half bot" id="botHalf">
+        <div class="inner">
+          <div class="scene-1">
+            <div class="photo"></div>
+            <div class="vignette"></div>
+            <div class="grain"></div>
+
+            <div class="top-chrome">
+              <div class="brand"><span class="square"></span> Orange Invest</div>
+            </div>
+
+            <div class="s1-copy">
+              <h1><span class="mark">Talk</span> to Your <em>Money</em></h1>
+              <div class="sub">Took you long enough — your future self, <span class="xo">xoxo</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="jag" id="jagBot"></div>
+        <div class="edge" id="edgeBot"></div>
+      </div>
+    </div>
+
+    <div class="scroll-hint" id="hint">
+      Scroll to tear open
+      <div class="line"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 3 -->
+<section class="site" id="site">
+  <div class="site-inner">
+    <div class="banner">
+      <img src="images/scene-3-bg.png" alt="La Dolce Vita collage" loading="lazy">
+    </div>
+
+    <div class="s3-copy">
+      <h2>Your money, <em style="color: rgb(137, 108, 84)">la dolce vita.</em></h2>
+      <p>Get the app or read why we started this</p>
+    </div>
+
+    <div class="s3-actions">
+      <a class="s3-btn primary" href="#">Download the App <span class="arr">→</span></a>
+      <a class="s3-btn ghost" href="#" id="manifestoBtn">Manifesto</a>
+    </div>
+
+    <footer class="s3-footer">
+      <div class="s3-footer-links">
+        <a class="s3-footer-link" href="https://www.linkedin.com/in/balivarun/" target="_blank" rel="noopener noreferrer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+        <a class="s3-footer-link" href="mailto:team@orangeinvest.app">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><polyline points="2,4 12,13 22,4"/></svg>
+        </a>
+        <a class="s3-footer-link" href="tel:+919896172797">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.77a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.05z"/></svg>
+        </a>
+      </div>
+    </footer>
+  </div>
+</section>
+
+<!-- Tweaks -->
+<div class="tweaks" id="tweaks">
+  <h4>Tweaks</h4>
+  <div class="row"><label>Tear distance</label><input id="tkTear" type="range" min="50" max="140" value="100"><span class="v" id="tkTearV">100</span></div>
+  <div class="row"><label>Zoom max</label><input id="tkZoom" type="range" min="130" max="280" value="210"><span class="v" id="tkZoomV">2.1×</span></div>
+  <div class="row"><label>Elasticity</label><input id="tkEase" type="range" min="0" max="100" value="55"><span class="v" id="tkEaseV">.55</span></div>
+  <div class="row"><label>Seam glow</label><input id="tkGlow" type="range" min="0" max="100" value="80"><span class="v" id="tkGlowV">.80</span></div>
+  <button class="replay" id="replay">Replay ↺</button>
+</div>
+
+<script>
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "tearDistance": 100,
+  "zoomMax": 210,
+  "elasticity": 55,
+  "seamGlow": 80
+}/*EDITMODE-END*/;
+
+const runway   = document.getElementById('runway');
+const stage    = document.getElementById('stage');
+const topHalf  = document.getElementById('topHalf');
+const botHalf  = document.getElementById('botHalf');
+const s2zoom   = document.getElementById('s2zoom');
+const scene2   = document.getElementById('scene2');
+const siteEl   = document.getElementById('site');
+const hint     = document.getElementById('hint');
+const bar      = document.getElementById('bar');
+const jagTop   = document.getElementById('jagTop');
+const jagBot   = document.getElementById('jagBot');
+const edgeTop  = document.getElementById('edgeTop');
+const edgeBot  = document.getElementById('edgeBot');
+
+let state = {...TWEAK_DEFAULTS};
+let rafId = null;
+let lastScrollY = -1;
+
+// Dynamic runway height — 5× viewport so scroll distance feels right on any screen
+function setRunwayHeight(){
+  runway.style.height = (window.innerHeight * 5) + 'px';
+}
+setRunwayHeight();
+
+function easeOutCubic(t){ return 1 - Math.pow(1-t, 3); }
+function easeInOutCubic(t){ return t<0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2; }
+function easeOutQuint(t){ return 1 - Math.pow(1-t, 5); }
+function easeOutBack(t, s=1.1){ return 1 + (s+1)*Math.pow(t-1,3) + s*Math.pow(t-1,2); }
+function blendEase(t, mix){ return easeOutCubic(t)*(1-mix) + easeOutBack(t,1.1)*mix; }
+
+function render(){
+  const rect  = runway.getBoundingClientRect();
+  const total = runway.offsetHeight - window.innerHeight;
+  const p     = Math.min(1, Math.max(0, -rect.top / total));
+
+  const tearP  = Math.min(1, Math.max(0, (p - 0.06) / (0.42 - 0.06)));
+  const slideP = Math.min(1, Math.max(0, (p - 0.44) / (0.96 - 0.44)));
+
+  // Tear
+  const mix    = state.elasticity/100 * 0.45;
+  const tE     = blendEase(tearP, mix);
+  const dist   = state.tearDistance/100;
+  const shift  = 55 * dist * tE;   // vh
+  const tilt   = tE * 0.35;
+
+  // Use translate3d for GPU compositing — critical for iOS Safari
+  topHalf.style.transform = `translate3d(0, ${-shift}vh, 0) rotate(${-tilt}deg)`;
+  botHalf.style.transform = `translate3d(0, ${shift}vh, 0) rotate(${tilt}deg)`;
+
+  // Seam glow
+  const glow = Math.sin(Math.min(1, tearP*1.3) * Math.PI) * (state.seamGlow/100);
+  edgeTop.style.opacity = glow;
+  edgeBot.style.opacity = glow;
+  jagTop.style.opacity  = Math.min(1, tearP*2.2);
+  jagBot.style.opacity  = Math.min(1, tearP*2.2);
+
+  // Site rises — translate3d avoids iOS fixed+transform compositing bug
+  const sitE = easeOutCubic(slideP);
+  const slideVh = (1 - sitE) * 100;
+  siteEl.style.webkitTransform = `translate3d(0, ${slideVh}vh, 0)`;
+  siteEl.style.transform       = `translate3d(0, ${slideVh}vh, 0)`;
+  siteEl.style.opacity   = '1';
+
+  // UI
+  hint.style.opacity = p < 0.04 ? 0.85 : 0;
+  bar.style.width = (p*100).toFixed(2)+'%';
+}
+
+function onScroll(){
+  // RAF throttle — only re-render when scroll position actually changes
+  if(rafId) return;
+  rafId = requestAnimationFrame(()=>{
+    rafId = null;
+    const y = window.scrollY;
+    if(y !== lastScrollY){
+      lastScrollY = y;
+      render();
+    }
+  });
+}
+
+window.addEventListener('scroll', onScroll, {passive:true});
+window.addEventListener('resize', ()=>{ setRunwayHeight(); render(); });
+render();
+
+document.getElementById('replay').addEventListener('click', ()=>window.scrollTo({top:0, behavior:'smooth'}));
+
+// Tweaks edit-mode protocol
+const tweaksEl = document.getElementById('tweaks');
+function applyState(){
+  document.getElementById('tkTearV').textContent = state.tearDistance;
+  document.getElementById('tkZoomV').textContent = (state.zoomMax/100).toFixed(1)+'×';
+  document.getElementById('tkEaseV').textContent = (state.elasticity/100).toFixed(2);
+  document.getElementById('tkGlowV').textContent = (state.seamGlow/100).toFixed(2);
+  document.getElementById('tkTear').value = state.tearDistance;
+  document.getElementById('tkZoom').value = state.zoomMax;
+  document.getElementById('tkEase').value = state.elasticity;
+  document.getElementById('tkGlow').value = state.seamGlow;
+  render();
+}
+applyState();
+function bindRange(id, key){
+  document.getElementById(id).addEventListener('input', e=>{
+    state[key] = +e.target.value;
+    applyState();
+    try{ window.parent.postMessage({type:'__edit_mode_set_keys', edits:{[key]:state[key]}}, '*'); }catch{}
+  });
+}
+bindRange('tkTear','tearDistance');
+bindRange('tkZoom','zoomMax');
+bindRange('tkEase','elasticity');
+bindRange('tkGlow','seamGlow');
+
+window.addEventListener('message', e=>{
+  const d = e.data || {};
+  if (d.type === '__activate_edit_mode')   tweaksEl.classList.add('open');
+  if (d.type === '__deactivate_edit_mode') tweaksEl.classList.remove('open');
+});
+try{ window.parent.postMessage({type:'__edit_mode_available'}, '*'); }catch{}
+</script>
+
+  <script>
+  document.getElementById('manifestoBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    window.open('manifesto.html', '_blank');
+  });
+</script>
+</body>
+</html>
